@@ -20,6 +20,10 @@ export default defineConfig({
     },
     react(),
     VitePWA({
+      devOptions: {
+        enabled: true,
+        type: 'module'
+      },
       // injectManifest: VitePWA injicerar precache-manifestet i vår custom sw.js
       // via self.__WB_MANIFEST. Detta möjliggör push/notificationclick-handlers.
       registerType: 'autoUpdate',

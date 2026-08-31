@@ -37,7 +37,7 @@ self.addEventListener("push", (event) => {
     icon:              data.icon || "/pwa-192x192.png",
     badge:             data.badge || "/pwa-192x192.png",
     tag:               data.tag  || "hms-push",
-    data:              { url: data.url || "/admin.html#/admin" },
+    data:              { url: data.url || "/admin" },
     requireInteraction: false,
     silent:            false,
     vibrate:           [200, 100, 200],
@@ -55,7 +55,7 @@ self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
   const targetUrl = event.notification.data?.url
-    || "/admin.html#/admin";
+    || "/admin";
 
   event.waitUntil(
     self.clients

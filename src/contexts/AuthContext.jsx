@@ -68,9 +68,9 @@ export const AuthProvider = ({ children }) => {
       fetchProfile(session?.user ?? null);
       
       // If Supabase successfully processes a recovery link, route the user manually
-      // This avoids HashRouter conflicts with Supabase's implicit flow tokens in the URL hash.
+      // This avoids router conflicts with Supabase's implicit flow tokens in the URL hash.
       if (event === 'PASSWORD_RECOVERY') {
-        window.location.hash = '#/admin/update-password';
+        window.location.href = '/admin/update-password';
       }
     });
 
@@ -108,9 +108,9 @@ export const AuthProvider = ({ children }) => {
     const baseUrl = window.location.origin;
     const basePath = import.meta.env.BASE_URL || '/';
     
-    // We send the user to the ROOT of the application, NOT directly to the hash route.
+    // We send the user to the ROOT of the application, NOT directly to a route.
     // This allows Supabase to put the tokens cleanly in the hash (#access_token=...) 
-    // or query string (?code=...) without colliding with React HashRouter's own routes.
+    // or query string (?code=...) without colliding with React router's own routes.
     // The onAuthStateChange listener will catch 'PASSWORD_RECOVERY' and navigate correctly.
     const redirectUrl = `${baseUrl}${basePath}`.replace(/([^:]\/)\/+/g, "$1");
     

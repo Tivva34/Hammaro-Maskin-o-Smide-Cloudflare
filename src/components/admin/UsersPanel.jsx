@@ -85,7 +85,7 @@ export default function UsersPanel() {
       setError('');
       setSuccess('');
       const res = await fetch(
-        `${import.meta.env.VITE_SUPABASE_URL || 'https://tjxyqijtxofpzhrmvldq.supabase.co'}/functions/v1/admin-users`,
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-users`,
         {
           method: 'POST',
           headers: {

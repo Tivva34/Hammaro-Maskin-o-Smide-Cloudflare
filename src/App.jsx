@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from 'react';
-import { HashRouter, Routes, Route, useLocation, useNavigationType, Navigate, matchPath, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useNavigationType, Navigate, matchPath, Link } from 'react-router-dom';
 import { supabase } from './lib/supabase';
 import { AuthProvider } from './contexts/AuthContext';
 import { LanguageProvider, useLang } from './contexts/LanguageContext';
@@ -202,9 +202,9 @@ function App() {
           addLog("Navigating to update password page...");
           
           setIsRecovering(false);
-          // Ge React en ms att rendera HashRouter innan vi styr om
+          // Ge React en ms att rendera BrowserRouter innan vi styr om
           setTimeout(() => {
-            window.location.hash = '#/admin/update-password';
+            window.location.href = '/admin/update-password';
           }, 50);
         } else if (event === 'SIGNED_IN') {
           const hashStr = window.location.hash || '';
@@ -212,13 +212,13 @@ function App() {
             addLog("SIGNED_IN with recovery/invite token. Navigating to update password...");
             setIsRecovering(false);
             setTimeout(() => {
-              window.location.hash = '#/admin/update-password';
+              window.location.href = '/admin/update-password';
             }, 50);
           } else {
             addLog("SIGNED_IN event received. Navigating to admin...");
             setIsRecovering(false);
             setTimeout(() => {
-              window.location.hash = '#/admin';
+              window.location.href = '/admin';
             }, 50);
           }
         }
@@ -249,7 +249,7 @@ function App() {
   }
 
   return (
-    <HashRouter>
+    <BrowserRouter>
       <AuthProvider>
         <Routes>
           {/* Admin routes – completely separate layout, no Navbar/Footer */}
@@ -263,7 +263,7 @@ function App() {
           <Route path="/*" element={<PublicLayout />} />
         </Routes>
       </AuthProvider>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

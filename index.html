@@ -57,9 +57,10 @@
         }
       } catch (e) {}
       
-      // Redirect to admin.html if the URL points to Admin
+      // Graceful fallback for old bookmarks using hash routing
       if (window.location.hash.startsWith('#/admin')) {
-        window.location.replace('/admin.html' + window.location.hash);
+        var newPath = window.location.hash.replace('#', '');
+        window.location.replace(newPath);
       }
     })();
   </script>

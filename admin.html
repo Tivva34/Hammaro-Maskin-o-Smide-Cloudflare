@@ -57,10 +57,7 @@
         }
       } catch (e) {}
       
-      // Force hash to #/admin to ensure Admin view loads
-      if (!window.location.hash || window.location.hash === '#/') {
-        window.location.hash = '#/admin';
-      }
+      // Hash routing has been removed in favor of BrowserRouter
     })();
   </script>
 </head>
