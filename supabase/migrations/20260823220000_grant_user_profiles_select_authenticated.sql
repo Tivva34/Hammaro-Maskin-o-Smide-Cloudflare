@@ -1,0 +1,20 @@
+-- user_profiles saknar GRANT SELECT till authenticated-rollen.
+--
+-- RLS-policyn "Users can read own profile" (migration 20260823180000) lyder:
+--   USING (auth.uid() = id)
+-- ...men PostgreSQL kräver att authenticated-rollen har tabell-privilegiet SELECT
+-- INNAN RLS-policyn ens evalueras. Utan detta GRANT misslyckas alla SELECT-queries
+-- mot user_profiles för authenticated-användare med "permission denied for table user_profiles".
+--
+-- SÄKERHETSANALYS:
+--   - RLS är aktiverat på user_profiles (migration 20260823170000, rad 14: ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY)
+--   - RLS-policyn "Users can read own profile" (USING auth.uid() = id) begränsar faktisk åtkomst
+--   - GRANT SELECT ger authenticated-rollen möjlighet att FÖRSÖKA läsa tabellen
+--   - RLS-policyn filtrerar sedan bort alla rader som inte tillhör den egna användaren
+--   - Nettoresultat: varje inloggad användare kan enbart läsa sin EGNA rad i user_profiles
+--   - Ingen annan användares profil läcker, trots det generella GRANT:et
+--
+-- Utan detta GRANT misslyckas Edge Function send-quote-reply i steg 3
+-- ("Fetch own profile for RBAC check") med profileError och returnerar HTTP 401,
+-- vilket frontend visar som "Edge Function returned a non-2xx status code".
+GRANT SELECT ON public.user_profiles TO authenticated;
