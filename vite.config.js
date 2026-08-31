@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/Hammar-Maskin-Smide/',
+  base: '/',
   plugins: [
     {
       name: 'fix-admin-manifest',
@@ -37,7 +37,7 @@ export default defineConfig({
         theme_color: '#1e2123',
         background_color: '#1e2123',
         display: 'standalone',
-        start_url: '/Hammar-Maskin-Smide/',
+        start_url: '/',
         icons: [
           {
             src: 'favicon.svg',

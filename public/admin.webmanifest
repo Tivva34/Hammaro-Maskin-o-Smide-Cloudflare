@@ -5,7 +5,7 @@
   "theme_color": "#1e2123",
   "background_color": "#1e2123",
   "display": "standalone",
-  "start_url": "/Hammar-Maskin-Smide/admin.html#/admin",
+  "start_url": "/admin.html#/admin",
   "icons": [
     {
       "src": "favicon.svg",

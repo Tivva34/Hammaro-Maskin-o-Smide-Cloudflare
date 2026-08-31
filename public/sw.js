@@ -34,10 +34,10 @@ self.addEventListener("push", (event) => {
   const title = data.title || "Hammarö Maskin & Smide";
   const options = {
     body:              data.body || "",
-    icon:              data.icon || "/Hammar-Maskin-Smide/pwa-192x192.png",
-    badge:             data.badge || "/Hammar-Maskin-Smide/pwa-192x192.png",
+    icon:              data.icon || "/pwa-192x192.png",
+    badge:             data.badge || "/pwa-192x192.png",
     tag:               data.tag  || "hms-push",
-    data:              { url: data.url || "/Hammar-Maskin-Smide/admin.html#/admin" },
+    data:              { url: data.url || "/admin.html#/admin" },
     requireInteraction: false,
     silent:            false,
     vibrate:           [200, 100, 200],
@@ -55,7 +55,7 @@ self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
   const targetUrl = event.notification.data?.url
-    || "/Hammar-Maskin-Smide/admin.html#/admin";
+    || "/admin.html#/admin";
 
   event.waitUntil(
     self.clients
