@@ -10,8 +10,8 @@ export default defineConfig({
       name: 'fix-admin-manifest',
       enforce: 'post',
       generateBundle(options, bundle) {
-        if (bundle['admin.html']) {
-          bundle['admin.html'].source = bundle['admin.html'].source.replace(
+        if (bundle['admin/index.html']) {
+          bundle['admin/index.html'].source = bundle['admin/index.html'].source.replace(
             'manifest.webmanifest',
             'admin.webmanifest'
           );
@@ -70,7 +70,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: './index.html',
-        admin: './admin.html'
+        admin: './admin/index.html'
       }
     }
   },
