@@ -122,7 +122,7 @@ const QuoteRequestsPanel = ({ onQuotesUpdated }) => {
     // Lyssnar på det globala notis-eventet
     const handleNewMessage = () => loadRequests(true);
     window.addEventListener('admin_quote_message_inserted', handleNewMessage);
-    
+
     return () => {
       window.removeEventListener('admin_quote_message_inserted', handleNewMessage);
     };
