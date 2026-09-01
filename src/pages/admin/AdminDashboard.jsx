@@ -313,7 +313,7 @@ const AdminDashboard = () => {
     if (!toDelete) return;
     setDeleting(true);
     
-    const isMachine = toDelete.category !== undefined; // machines have category, inventory does not
+    const isMachine = toDelete.itemType === 'machine';
     
     if (isMachine) {
       const { error: err } = await deleteMachine(toDelete.id);
@@ -840,7 +840,7 @@ const AdminDashboard = () => {
                           )}
                           {canDeleteMachines && (
                             <button
-                              onClick={() => setToDelete(m)}
+                              onClick={() => setToDelete({ ...m, itemType: 'machine' })}
                               title="Ta bort"
                               style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.4rem 0.75rem', background: 'transparent', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '6px', color: '#f87171', fontSize: '0.8125rem', cursor: 'pointer', whiteSpace: 'nowrap' }}
                             >
@@ -895,7 +895,7 @@ const AdminDashboard = () => {
                           )}
                           {canDeleteInventory && (
                             <button
-                              onClick={() => setToDelete(m)}
+                              onClick={() => setToDelete({ ...m, itemType: 'inventory' })}
                               title="Ta bort"
                               style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', padding: '0.4rem 0.75rem', background: 'transparent', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '6px', color: '#f87171', fontSize: '0.8125rem', cursor: 'pointer', whiteSpace: 'nowrap' }}
                             >
@@ -949,7 +949,7 @@ const AdminDashboard = () => {
                       </Link>
                     )}
                     {canDeleteMachines && (
-                      <button onClick={() => setToDelete(m)} style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem', padding: '0.5rem', background: 'transparent', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '6px', color: '#f87171', fontSize: '0.8125rem', cursor: 'pointer' }}>
+                      <button onClick={() => setToDelete({ ...m, itemType: 'machine' })} style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem', padding: '0.5rem', background: 'transparent', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '6px', color: '#f87171', fontSize: '0.8125rem', cursor: 'pointer' }}>
                         <Trash2 size={13} /> Ta bort
                       </button>
                     )}
@@ -993,7 +993,7 @@ const AdminDashboard = () => {
                       </Link>
                     )}
                     {canDeleteInventory && (
-                      <button onClick={() => setToDelete(m)} style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem', padding: '0.5rem', background: 'transparent', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '6px', color: '#f87171', fontSize: '0.8125rem', cursor: 'pointer' }}>
+                      <button onClick={() => setToDelete({ ...m, itemType: 'inventory' })} style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem', padding: '0.5rem', background: 'transparent', border: '1px solid rgba(239,68,68,0.3)', borderRadius: '6px', color: '#f87171', fontSize: '0.8125rem', cursor: 'pointer' }}>
                         <Trash2 size={13} /> Ta bort
                       </button>
                     )}
