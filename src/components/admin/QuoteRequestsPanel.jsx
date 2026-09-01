@@ -732,7 +732,7 @@ const QuoteRequestsPanel = ({ onQuotesUpdated }) => {
                   </div>
 
                   {/* Rad 1 (Mobil) / Höger (Desktop): Status & Taggar */}
-                  <div className="quote-list-item-top" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <div className="quote-list-item-top" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
                     {(() => {
                       const isClosed = req.status === 'completed' || req.status === 'archived';
                       const hasUnread = req.messages?.some(m => m.sender_type === 'customer' && m.is_read === false);
@@ -743,12 +743,12 @@ const QuoteRequestsPanel = ({ onQuotesUpdated }) => {
                       return (
                         <>
                           {(!isClosed && hasUnread) && (
-                            <span style={{ backgroundColor: '#ef4444', color: '#fff', padding: '0.2rem 0.6rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
+                            <span style={{ backgroundColor: '#ef4444', color: '#fff', padding: '0.2rem 0.6rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 600, display: 'inline-flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
                               Nytt svar
                             </span>
                           )}
                           {needsReply && (
-                            <span style={{ backgroundColor: '#f59e0b', color: '#fff', padding: '0.2rem 0.6rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 600, display: 'inline-flex', alignItems: 'center' }}>
+                            <span style={{ backgroundColor: '#f59e0b', color: '#fff', padding: '0.2rem 0.6rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 600, display: 'inline-flex', alignItems: 'center', whiteSpace: 'nowrap' }}>
                               Ej besvarad
                             </span>
                           )}

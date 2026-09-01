@@ -80,6 +80,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+[data-theme="light"] body.admin-body {
+  background-color: #f4f5f5;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Outfit', sans-serif;
   font-weight: 700;
@@ -162,6 +166,10 @@ button {
   gap: 0.5rem;
 }
 
+.btn:hover {
+  transform: translateY(-2px);
+}
+
 .btn-primary {
   background-color: var(--accent-primary);
   color: var(--text-inverse);
@@ -169,7 +177,6 @@ button {
 
 .btn-primary:hover {
   background-color: var(--accent-hover);
-  transform: translateY(-2px);
   color: var(--text-inverse);
 }
 
@@ -182,6 +189,7 @@ button {
 .btn-secondary:hover {
   background-color: #383c40;
   border-color: rgba(255, 255, 255, 0.3);
+  color: var(--accent-primary);
 }
 
 [data-theme="light"] .btn-secondary {
