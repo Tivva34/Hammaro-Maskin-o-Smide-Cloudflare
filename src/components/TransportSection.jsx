@@ -16,8 +16,8 @@ const TransportSection = ({ onOpenModal }) => {
           justifyContent: 'space-between',
           gap: '2rem',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flex: '1 1 min-content' }}>
-            <div style={{ backgroundColor: '#000', color: 'var(--accent-primary)', padding: '1rem', borderRadius: '50%' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flex: '1 1 450px' }}>
+            <div style={{ backgroundColor: '#000', color: 'var(--accent-primary)', padding: '1rem', borderRadius: '50%', flexShrink: 0 }}>
               <Truck size={32} />
             </div>
             <div>
