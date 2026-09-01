@@ -352,6 +352,8 @@ const AdminDashboard = () => {
     sold:      inventory.filter(i => i.status === 'sold').length,
   };
 
+  const statusSortOrder = { draft: 1, reserved: 2, published: 3, sold: 4 };
+
   const filteredMachines = machines.filter(m => {
     const matchesStatus = statusFilter === 'all' || m.status === statusFilter;
     if (!matchesStatus) return false;
@@ -366,7 +368,7 @@ const AdminDashboard = () => {
       (m.description && m.description.toLowerCase().includes(q)) ||
       (m.description_en && m.description_en.toLowerCase().includes(q))
     );
-  });
+  }).sort((a, b) => (statusSortOrder[a.status] || 99) - (statusSortOrder[b.status] || 99));
 
   const filteredInventory = inventory.filter(m => {
     const matchesStatus = statusFilter === 'all' || m.status === statusFilter;
@@ -379,7 +381,7 @@ const AdminDashboard = () => {
       (m.category && m.category.toLowerCase().includes(q)) ||
       (m.description_en && m.description_en.toLowerCase().includes(q))
     );
-  });
+  }).sort((a, b) => (statusSortOrder[a.status] || 99) - (statusSortOrder[b.status] || 99));
 
   const headerActionsRender = (
     <>
