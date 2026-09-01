@@ -176,7 +176,7 @@ function App() {
     // Om hash innehåller access_token (implicit flow) eller type=recovery är det ett supabase-auth-anrop
     const hash = window.location.hash || '';
     const search = window.location.search || '';
-    return hash.includes('type=recovery') || hash.includes('access_token=') || search.includes('code=');
+    return hash.includes('type=recovery') || hash.includes('type=invite') || hash.includes('access_token=') || search.includes('code=');
   });
 
   const [diagnosticLogs, setDiagnosticLogs] = useState([]);
@@ -207,20 +207,11 @@ function App() {
             window.location.href = '/admin/update-password';
           }, 50);
         } else if (event === 'SIGNED_IN') {
-          const hashStr = window.location.hash || '';
-          if (hashStr.includes('type=recovery') || hashStr.includes('type=invite')) {
-            addLog("SIGNED_IN with recovery/invite token. Navigating to update password...");
-            setIsRecovering(false);
-            setTimeout(() => {
-              window.location.href = '/admin/update-password';
-            }, 50);
-          } else {
-            addLog("SIGNED_IN event received. Navigating to admin...");
-            setIsRecovering(false);
-            setTimeout(() => {
-              window.location.href = '/admin';
-            }, 50);
-          }
+          addLog("SIGNED_IN event received during recovery/invite flow. Navigating to update password...");
+          setIsRecovering(false);
+          setTimeout(() => {
+            window.location.href = '/admin/update-password';
+          }, 50);
         }
       });
       
@@ -238,11 +229,15 @@ function App() {
 
   if (isRecovering) {
     return (
-      <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
+      <div style={{ padding: '2rem', fontFamily: 'sans-serif', maxWidth: '100vw', boxSizing: 'border-box' }}>
         <h2>Verifierar inloggningslänk...</h2>
-        <div style={{ marginTop: '1rem', padding: '1rem', background: '#f4f4f4', borderRadius: '8px' }}>
-          <h4>Diagnostik (Säker):</h4>
-          {diagnosticLogs.map((log, i) => <div key={i} style={{fontSize:'0.85rem', color:'#555'}}>{log}</div>)}
+        <div style={{ marginTop: '1rem', padding: '1rem', background: '#f4f4f4', borderRadius: '8px', width: '100%', boxSizing: 'border-box' }}>
+          <h4 style={{ marginTop: 0 }}>Diagnostik (Säker):</h4>
+          {diagnosticLogs.map((log, i) => (
+            <div key={i} style={{ fontSize: '0.85rem', color: '#555', wordBreak: 'break-all', overflowWrap: 'break-word' }}>
+              {log}
+            </div>
+          ))}
         </div>
       </div>
     );

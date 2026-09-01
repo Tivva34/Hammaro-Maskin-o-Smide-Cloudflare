@@ -105,15 +105,11 @@ export const AuthProvider = ({ children }) => {
    * Reset password for email.
    */
   const resetPassword = async (email) => {
-    const baseUrl = window.location.origin;
-    const basePath = import.meta.env.BASE_URL || '/';
-    
-    // We send the user to the ROOT of the application, NOT directly to a route.
-    // This allows Supabase to put the tokens cleanly in the hash (#access_token=...) 
-    // or query string (?code=...) without colliding with React router's own routes.
-    // The onAuthStateChange listener will catch 'PASSWORD_RECOVERY' and navigate correctly.
-    const redirectUrl = `${baseUrl}${basePath}`.replace(/([^:]\/)\/+/g, "$1");
-    
+    // Use VITE_APP_URL (baked in at build time) so the reset link always points to the
+    // deployed Cloudflare URL, never to localhost when the admin happens to be on a dev machine.
+    const appUrl = (import.meta.env.VITE_APP_URL ?? window.location.origin).replace(/\/$/, '');
+    const redirectUrl = `${appUrl}/admin/update-password`;
+
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: redirectUrl,
     });

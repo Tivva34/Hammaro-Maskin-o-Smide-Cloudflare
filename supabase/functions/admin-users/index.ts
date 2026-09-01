@@ -112,9 +112,12 @@ serve(async (req) => {
       throw new HttpError("Forbidden: Requires admin privileges", 403);
     }
 
-    // 4. Extract Redirect URL from request Origin
-    const origin = req.headers.get("origin") || req.headers.get("referer") || Deno.env.get("VITE_APP_URL");
-    const redirectTo = origin ? `${origin.replace(/\/$/, "")}/admin` : undefined;
+    // 4. Redirect URL for invite/recovery emails.
+    // APP_URL must be set as a Supabase Edge Function secret (e.g. https://hammaro-maskin-o-smide-cloudflare.pages.dev).
+    // We never derive this from the caller's Origin header because that would produce localhost links
+    // when the admin is running the dev server locally.
+    const appUrl = (Deno.env.get("APP_URL") ?? "https://hammaro-maskin-o-smide-cloudflare.pages.dev").replace(/\/$/, "");
+    const redirectTo = `${appUrl}/admin/update-password`;
 
     const { action, payload } = await req.json();
 
