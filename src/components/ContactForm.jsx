@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CheckCircle } from 'lucide-react';
 import { useLang } from '../contexts/LanguageContext';
 import { createQuoteRequest } from '../lib/quoteService';
 
-const ContactForm = () => {
+const ContactForm = ({ preselectedSubject = '' }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    subject: '',
+    subject: preselectedSubject,
     message: ''
   });
+
+  useEffect(() => {
+    setFormData(prev => ({ ...prev, subject: preselectedSubject }));
+  }, [preselectedSubject]);
   
   const [status, setStatus] = useState('idle'); // idle | submitting | success | error
   const [errorMsg, setErrorMsg] = useState('');

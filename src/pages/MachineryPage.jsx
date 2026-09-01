@@ -6,6 +6,7 @@ import QuoteModal from '../components/QuoteModal';
 
 const MachineryPage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState('sell_machine');
 
   useEffect(() => {
     document.title = 'Begagnade maskiner | Hammarö Maskin & Smide';
@@ -15,12 +16,12 @@ const MachineryPage = () => {
   return (
     <>
       <MachinerySection />
-      <BuySellSection onOpenModal={() => setModalOpen(true)} />
-      <TransportSection onOpenModal={() => setModalOpen(true)} />
+      <BuySellSection onOpenModal={() => { setModalType('sell_machine'); setModalOpen(true); }} />
+      <TransportSection onOpenModal={() => { setModalType('transport'); setModalOpen(true); }} />
       <QuoteModal 
         isOpen={modalOpen} 
         onClose={() => setModalOpen(false)} 
-        preselectedType="sell_machine" 
+        preselectedType={modalType} 
       />
     </>
   );

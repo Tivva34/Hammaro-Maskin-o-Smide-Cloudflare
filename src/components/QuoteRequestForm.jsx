@@ -191,6 +191,7 @@ const QuoteRequestForm = ({ preselectedType = 'other', machine = null, inventory
             <option value="machine">{t('quote.types.machine')}</option>
             <option value="inventory">{t('quote.types.inventory')}</option>
             <option value="transport">{t('quote.types.transport')}</option>
+            <option value="machine_transport">{t('quote.types.machine_transport')}</option>
             <option value="sell_machine">{t('quote.types.sell_machine')}</option>
             <option value="requested">{t('quote.types.requested')}</option>
             <option value="other">{t('quote.types.other')}</option>

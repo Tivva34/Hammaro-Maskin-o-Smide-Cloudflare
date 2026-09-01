@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLang } from '../contexts/LanguageContext';
+import ContactModal from './ContactModal';
 
 const BuySellSection = ({ onOpenModal }) => {
   const { t } = useLang();
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   return (
     <section className="section" style={{ padding: 0 }}>
@@ -55,13 +57,27 @@ const BuySellSection = ({ onOpenModal }) => {
             <span className="eyebrow" style={{ color: 'var(--text-secondary)' }}>{t('buySell.buyEyebrow')}</span>
             <h2 style={{ marginBottom: '1.5rem' }}>{t('buySell.buyHeading')}</h2>
             <p style={{ marginBottom: '2.5rem', fontSize: '1.125rem' }}>{t('buySell.buyDesc')}</p>
-            <Link to="/maskiner" className="btn btn-secondary" style={{ textDecoration: 'none' }}>
-              {t('buySell.buyCta')}
-            </Link>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <Link to="/maskiner" className="btn btn-secondary" style={{ textDecoration: 'none' }}>
+                {t('buySell.buyCta')}
+              </Link>
+              <button 
+                onClick={() => setIsContactModalOpen(true)}
+                className="btn btn-primary"
+                style={{ cursor: 'pointer', fontFamily: 'inherit', fontSize: '1rem', border: 'none' }}
+              >
+                {t('nav.contactCta')}
+              </button>
+            </div>
           </div>
         </div>
 
       </div>
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+        subject="buy" 
+      />
     </section>
   );
 };

@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Tractor, Hammer } from 'lucide-react';
 import { useLang } from '../contexts/LanguageContext';
+import ContactModal from '../components/ContactModal';
 
 /* ─────────────────────────────────────────────────────────────
    Om Hammarö Maskin & Smide – /om-oss
@@ -9,6 +10,8 @@ import { useLang } from '../contexts/LanguageContext';
 
 const AboutPage = () => {
   const { t } = useLang();
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [contactModalSubject, setContactModalSubject] = useState('');
 
   useEffect(() => {
     document.title = 'Om oss | Hammarö Maskin & Smide';
@@ -43,9 +46,13 @@ const AboutPage = () => {
                 {t('about.intro')}
               </p>
               <div className="fade-up delay-200" style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-                <Link to="/kontakt" className="btn btn-primary" style={{ textDecoration: 'none' }}>
+                <button 
+                  onClick={() => { setContactModalSubject(''); setIsContactModalOpen(true); }} 
+                  className="btn btn-primary" 
+                  style={{ textDecoration: 'none', cursor: 'pointer', border: 'none', fontFamily: 'inherit', fontSize: '1rem' }}
+                >
                   {t('about.ctaContact')} <ArrowRight size={18} />
-                </Link>
+                </button>
                 <Link to="/maskiner" className="btn btn-secondary" style={{ textDecoration: 'none' }}>
                   {t('about.ctaMachines')}
                 </Link>
@@ -124,13 +131,13 @@ const AboutPage = () => {
                 {t('about.smideTitle')}
               </h3>
               <p style={{ flexGrow: 1 }}>{t('about.smideDesc')}</p>
-              <Link
-                to="/kontakt"
+              <button
+                onClick={() => { setContactModalSubject('manufacturing'); setIsContactModalOpen(true); }}
                 className="btn btn-secondary"
-                style={{ textDecoration: 'none', marginTop: '1.5rem', alignSelf: 'flex-start' }}
+                style={{ textDecoration: 'none', marginTop: '1.5rem', alignSelf: 'flex-start', cursor: 'pointer', fontFamily: 'inherit', fontSize: '1rem' }}
               >
                 {t('about.smideCta')}
-              </Link>
+              </button>
             </div>
 
           </div>
@@ -152,9 +159,13 @@ const AboutPage = () => {
               <p style={{ maxWidth: '520px', marginBottom: 0 }}>{t('about.ctaDesc')}</p>
             </div>
             <div className="about-cta-buttons">
-              <Link to="/kontakt" className="btn btn-primary" style={{ textDecoration: 'none' }}>
+              <button 
+                onClick={() => { setContactModalSubject('buy'); setIsContactModalOpen(true); }} 
+                className="btn btn-primary" 
+                style={{ textDecoration: 'none', cursor: 'pointer', border: 'none', fontFamily: 'inherit', fontSize: '1rem' }}
+              >
                 {t('about.ctaContact2')} <ArrowRight size={18} />
-              </Link>
+              </button>
               <Link to="/maskiner" className="btn btn-secondary" style={{ textDecoration: 'none' }}>
                 {t('about.ctaMachines2')}
               </Link>
@@ -162,6 +173,12 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
+
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+        subject={contactModalSubject}
+      />
 
       {/* ── Styles ──────────────────────────────────────────────── */}
       <style>{`

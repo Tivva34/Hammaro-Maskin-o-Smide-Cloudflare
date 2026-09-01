@@ -174,14 +174,26 @@ button {
 }
 
 .btn-secondary {
-  background-color: transparent;
-  border: 1px solid var(--border-color);
+  background-color: #2a2d30;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: var(--text-primary);
 }
 
 .btn-secondary:hover {
-  background-color: var(--bg-surface);
-  border-color: var(--text-secondary);
+  background-color: #383c40;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="light"] .btn-secondary {
+  background-color: #121415;
+  color: #ffffff;
+  border-color: #121415;
+}
+
+[data-theme="light"] .btn-secondary:hover {
+  background-color: #2a2e30;
+  border-color: #2a2e30;
+  color: #ffffff;
 }
 
 /* Animations */

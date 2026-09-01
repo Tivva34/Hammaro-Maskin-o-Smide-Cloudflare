@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Phone } from 'lucide-react';
 import { useLang } from '../contexts/LanguageContext';
+import ContactModal from './ContactModal';
 
 const Hero = () => {
   const { t } = useLang();
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   return (
     <section
@@ -57,9 +59,13 @@ const Hero = () => {
             <Link to="/maskiner" className="btn btn-primary" style={{ textDecoration: 'none' }}>
               {t('hero.ctaMachines')} <ArrowRight size={18} />
             </Link>
-            <Link to="/kontakt" className="btn btn-secondary" style={{ backgroundColor: 'rgba(255,255,255,0.05)', color: '#fff', borderColor: 'rgba(255,255,255,0.2)', textDecoration: 'none' }}>
+            <button 
+              onClick={() => setIsContactModalOpen(true)} 
+              className="btn btn-secondary" 
+              style={{ cursor: 'pointer', fontFamily: 'inherit', fontSize: '1rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
+            >
               <Phone size={18} /> {t('hero.ctaContact')}
-            </Link>
+            </button>
           </div>
 
           {/* Tag row */}
@@ -74,6 +80,11 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
 
       <style>{`
         .hero-tags {

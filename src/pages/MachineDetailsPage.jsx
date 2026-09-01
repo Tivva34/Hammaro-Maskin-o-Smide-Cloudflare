@@ -15,6 +15,7 @@ const MachineDetailsPage = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [similarMachines, setSimilarMachines] = useState([]);
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
+  const [quoteModalType, setQuoteModalType] = useState('machine');
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const { t, tDb, lang } = useLang();
@@ -302,7 +303,7 @@ const MachineDetailsPage = () => {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '2rem' }}>
                 <button
-                  onClick={() => setQuoteModalOpen(true)}
+                  onClick={() => { setQuoteModalType('machine'); setQuoteModalOpen(true); }}
                   className="btn btn-primary"
                   style={{ padding: '1rem', fontSize: '1.125rem', width: '100%' }}
                 >
@@ -437,10 +438,10 @@ const MachineDetailsPage = () => {
         isOpen={quoteModalOpen}
         onClose={() => setQuoteModalOpen(false)}
         machine={machine}
-        preselectedType="machine"
+        preselectedType={quoteModalType}
       />
 
-      <TransportSection onOpenModal={() => setQuoteModalOpen(true)} />
+      <TransportSection onOpenModal={() => { setQuoteModalType('machine_transport'); setQuoteModalOpen(true); }} />
     </>
   );
 };
