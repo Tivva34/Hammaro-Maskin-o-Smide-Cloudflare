@@ -220,16 +220,31 @@ export async function claimExistingSubscription(subscription) {
 
   if (!endpoint || !p256dh || !auth) return { success: false, error: 'Ogiltig prenumeration', code: 'invalid_sub' };
 
-  const { error: dbError } = await supabase.rpc('claim_push_subscription', {
+  const { data: { session } } = await supabase.auth.getSession();
+  console.log('[push-debug] user:', {
+    id: session?.user?.id,
+    email: session?.user?.email
+  });
+
+  console.log('[push-debug] RPC start');
+
+  const result = await supabase.rpc('claim_push_subscription', {
     p_endpoint: endpoint,
     p_p256dh: p256dh,
     p_auth: auth,
     p_user_agent: navigator.userAgent.slice(0, 255)
   });
 
-  if (dbError) {
-    console.error('[pushService] Failed to claim push subscription:', dbError);
-    throw dbError; // Kasta felet så att anroparen (GlobalAdminNotifications) kan fånga det
+  console.log('[push-debug] RPC result:', {
+    data: result.data,
+    error: result.error
+  });
+
+  console.log('[push-debug] RPC slut');
+
+  if (result.error) {
+    console.error('[pushService] Failed to claim push subscription:', result.error);
+    throw result.error; // Kasta felet så att anroparen (GlobalAdminNotifications) kan fånga det
   }
   
   return { success: true };
