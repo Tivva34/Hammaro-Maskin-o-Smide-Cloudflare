@@ -357,13 +357,13 @@ const QuoteRequestsPanel = ({ onQuotesUpdated }) => {
   };
 
   const getSortScore = (req) => {
+    if (req.status === 'new') return 1;
     const isClosed = req.status === 'completed' || req.status === 'archived';
     if (!isClosed) {
       const sorted = [...(req.messages || [])].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
       const lastMsg = sorted[sorted.length - 1];
-      if (lastMsg?.sender_type === 'customer') return 1;
+      if (lastMsg?.sender_type === 'customer') return 2;
     }
-    if (req.status === 'new') return 2;
     if (req.status === 'contacted') return 3;
     if (req.status === 'completed') return 4;
     if (req.status === 'archived') return 5;

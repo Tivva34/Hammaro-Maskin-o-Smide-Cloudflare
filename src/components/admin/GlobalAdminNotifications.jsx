@@ -39,12 +39,11 @@ const GlobalAdminNotifications = () => {
     if (!user) return;
 
     const channel = supabase
-      .channel('admin-customer-reply-notifications')
+      .channel('admin-notifications')
       .on(
         'postgres_changes',
         { event: 'INSERT', schema: 'public', table: 'quote_messages' },
         (payload) => {
-          console.log('REALTIME EVENT INKOMMIT:', payload);
           if (payload.new && payload.new.sender_type === 'customer') {
             setInAppToast('Nytt kundsvar inkommet!');
             playNotificationSound();
@@ -59,9 +58,23 @@ const GlobalAdminNotifications = () => {
           }
         }
       )
-      .subscribe((status) => {
-        console.log('REALTIME STATUS:', status);
-      });
+      .on(
+        'postgres_changes',
+        { event: 'INSERT', schema: 'public', table: 'quote_requests' },
+        (payload) => {
+          setInAppToast('Ny förfrågan inkommen!');
+          playNotificationSound();
+          
+          // Dispatch a global event so QuoteRequestsPanel can reload data
+          window.dispatchEvent(new CustomEvent('admin_quote_message_inserted'));
+
+          if (toastTimerRef.current) clearTimeout(toastTimerRef.current);
+          toastTimerRef.current = setTimeout(() => {
+            setInAppToast(null);
+          }, 6000);
+        }
+      )
+      .subscribe();
 
     return () => {
       supabase.removeChannel(channel);
