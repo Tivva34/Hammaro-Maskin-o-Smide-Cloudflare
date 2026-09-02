@@ -113,7 +113,7 @@ export default function ProfilePage() {
     setTestLoading(true);
     setPushError('');
     setPushSuccess('');
-    const result = await sendTestNotification(session);
+    const result = await sendTestNotification();
     if (result.success) {
       setPushSuccess(`Testnotifikation skickad till ${result.sent} enhet(er).`);
     } else {

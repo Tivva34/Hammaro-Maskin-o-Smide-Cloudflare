@@ -255,7 +255,9 @@ export async function unsubscribeCurrentDevice() {
 // ---------------------------------------------------------------------------
 // Skicka testnotifikation till aktuell användare/enhet via Edge Function
 // ---------------------------------------------------------------------------
-export async function sendTestNotification(session) {
+export async function sendTestNotification() {
+  const { data: { session } } = await supabase.auth.getSession();
+
   if (!session?.access_token) {
     return { success: false, error: 'Inte inloggad.', code: 'unauthorized' };
   }
