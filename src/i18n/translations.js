@@ -102,7 +102,7 @@ const translations = {
       sellEyebrow: 'Försäljning',
       sellHeading: 'Har du en maskin att sälja?',
       sellDesc:
-        'Vi köper begagnade lantbruks- och entreprenadmaskiner. Kontakta oss om du har en maskin eller ett parti som du vill sälja. Vi garanterar en smidig affär.',
+        'Vi köper begagnade lantbruks- och entreprenadmaskiner, även defekta objekt.\nKontakta oss om du har en maskin eller ett parti som du vill sälja. Vi garanterar en smidig affär.',
       sellCta: 'Sälj din maskin',
       buyEyebrow: 'Inköp',
       buyHeading: 'Letar du efter en maskin?',

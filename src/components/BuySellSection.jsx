@@ -24,7 +24,7 @@ const BuySellSection = ({ onOpenModal }) => {
           <div style={{ maxWidth: '480px', margin: '0 auto', width: '100%' }}>
             <span className="eyebrow">{t('buySell.sellEyebrow')}</span>
             <h2 style={{ marginBottom: '1.5rem' }}>{t('buySell.sellHeading')}</h2>
-            <p style={{ marginBottom: '2.5rem', fontSize: '1.125rem' }}>{t('buySell.sellDesc')}</p>
+            <p style={{ marginBottom: '2.5rem', fontSize: '1.125rem', whiteSpace: 'pre-line' }}>{t('buySell.sellDesc')}</p>
             {onOpenModal ? (
               <button 
                 onClick={onOpenModal} 
