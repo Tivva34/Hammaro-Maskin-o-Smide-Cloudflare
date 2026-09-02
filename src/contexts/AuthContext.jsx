@@ -97,8 +97,19 @@ export const AuthProvider = ({ children }) => {
    * Returns { error } – caller handles error display.
    */
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    return { error };
+    try {
+      if (user) {
+        try {
+          const { unsubscribeCurrentDevice } = await import('../lib/pushNotificationService');
+          await unsubscribeCurrentDevice().catch(e => console.warn('Push cleanup failed', e));
+        } catch (e) {
+          console.warn('Could not load push service for cleanup', e);
+        }
+      }
+    } finally {
+      const { error } = await supabase.auth.signOut();
+      return { error };
+    }
   };
 
   /**

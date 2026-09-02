@@ -185,23 +185,13 @@ export async function subscribeToPush(customRegistration = null) {
   }
   const userId = session.user.id;
 
-  // 6. Spara i Supabase (RLS säkerställer att user_id = auth.uid())
-  const { error: dbError } = await supabase
-    .from('push_subscriptions')
-    .upsert(
-      {
-        user_id: userId,
-        endpoint,
-        p256dh,
-        auth,
-        user_agent: navigator.userAgent.slice(0, 255), // begränsa längd
-        updated_at: new Date().toISOString(),
-      },
-      {
-        onConflict: 'user_id,endpoint',
-        ignoreDuplicates: false,
-      }
-    );
+  // 6. Spara i Supabase via RPC (hanterar stöld av endpoint från annan user säkert)
+  const { error: dbError } = await supabase.rpc('claim_push_subscription', {
+    p_endpoint: endpoint,
+    p_p256dh: p256dh,
+    p_auth: auth,
+    p_user_agent: navigator.userAgent.slice(0, 255)
+  });
 
   if (dbError) {
     console.error('[pushService] DB upsert error:', dbError);
@@ -214,6 +204,33 @@ export async function subscribeToPush(customRegistration = null) {
     };
   }
 
+  return { success: true };
+}
+
+// ---------------------------------------------------------------------------
+// Claim existing PushSubscription for the current user
+// ---------------------------------------------------------------------------
+export async function claimExistingSubscription(subscription) {
+  if (!subscription) return { success: false, error: 'Ingen prenumeration', code: 'no_sub' };
+  
+  const subscriptionJson = subscription.toJSON();
+  const endpoint = subscriptionJson.endpoint;
+  const p256dh   = subscriptionJson.keys?.p256dh;
+  const auth     = subscriptionJson.keys?.auth;
+
+  if (!endpoint || !p256dh || !auth) return { success: false, error: 'Ogiltig prenumeration', code: 'invalid_sub' };
+
+  const { error: dbError } = await supabase.rpc('claim_push_subscription', {
+    p_endpoint: endpoint,
+    p_p256dh: p256dh,
+    p_auth: auth,
+    p_user_agent: navigator.userAgent.slice(0, 255)
+  });
+
+  if (dbError) {
+    console.error('[pushService] Claim error:', dbError);
+    return { success: false, error: dbError.message, code: 'db_error' };
+  }
   return { success: true };
 }
 

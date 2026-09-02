@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
-import { isPushSupported, getPushSubscriptionStatus, subscribeToPush } from '../../lib/pushNotificationService';
+import { isPushSupported, getPushSubscriptionStatus, subscribeToPush, claimExistingSubscription } from '../../lib/pushNotificationService';
 import { Mail } from 'lucide-react';
 
 const playNotificationSound = () => {
@@ -54,7 +54,7 @@ const GlobalAdminNotifications = () => {
         // 2. Check if we already have a subscription on the root SW
         let rootSub = await rootReg.pushManager.getSubscription();
 
-        // 3. If not, create the root subscription
+        // 3. If not, create the root subscription. If yes, claim it for current user.
         if (!rootSub) {
           console.log('[pushService] Skapar prenumeration på root Service Worker...');
           const result = await subscribeToPush(rootReg);
@@ -66,6 +66,9 @@ const GlobalAdminNotifications = () => {
           }
           
           rootSub = await rootReg.pushManager.getSubscription();
+        } else {
+          console.log('[pushService] Root prenumeration finns, claimar den för inloggad användare...');
+          await claimExistingSubscription(rootSub);
         }
 
         // 4. Nu har vi en fungerande prenumeration på root-scopet.
