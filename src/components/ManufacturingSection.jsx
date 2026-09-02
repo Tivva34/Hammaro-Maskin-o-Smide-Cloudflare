@@ -13,7 +13,7 @@ const ManufacturingSection = ({ onOpenModal }) => {
         <div style={{
           flex: '1 1 50%',
           minWidth: '300px',
-          backgroundImage: 'url("https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=2070&auto=format&fit=crop")',
+          background: 'linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-primary) 100%)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           minHeight: '400px',

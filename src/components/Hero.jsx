@@ -26,7 +26,7 @@ const Hero = () => {
           position: 'absolute',
           top: 0, left: 0, right: 0, bottom: 0,
           zIndex: -2,
-          backgroundImage: 'url("https://images.unsplash.com/photo-1592837943003-888e2501a351?q=80&w=2070&auto=format&fit=crop")',
+          backgroundColor: 'var(--bg-primary)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
