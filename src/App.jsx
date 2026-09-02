@@ -35,7 +35,7 @@ const ScrollToTop = () => {
     if (navType !== 'POP') {
       window.scrollTo(0, 0);
     }
-  }, [location.pathname, location.key]);
+  }, [location.pathname]);
 
   return null;
 };
