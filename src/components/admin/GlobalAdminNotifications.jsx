@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../../contexts/AuthContext';
+import { isPushSupported, getPushSubscriptionStatus, subscribeToPush } from '../../lib/pushNotificationService';
 import { Mail } from 'lucide-react';
 
 const playNotificationSound = () => {
@@ -33,6 +34,97 @@ const GlobalAdminNotifications = () => {
   const { user } = useAuth();
   const [inAppToast, setInAppToast] = useState(null);
   const toastTimerRef = useRef(null);
+
+  const isMigrating = useRef(false);
+
+  // Push Subscription Migration (from scope '/' to '/admin')
+  useEffect(() => {
+    // Grundkrav: Inloggad, push stöds, och användaren har redan gett tillåtelse
+    if (!user || !isPushSupported() || Notification.permission !== 'granted') return;
+
+    const migratePushSubscription = async () => {
+      // Förhindra samtidiga körningar från StrictMode
+      if (isMigrating.current) return;
+      isMigrating.current = true;
+
+      try {
+        // 1. Hämta exakt admin-registreringen
+        let adminReg = await navigator.serviceWorker.getRegistration('/admin');
+
+        if (!adminReg) {
+          isMigrating.current = false;
+          return; // Inte registrerad ännu.
+        }
+
+        // Hjälpfunktion för att vänta på att workern blir 'active' via statechange
+        const waitForActiveWorker = (reg) => new Promise((resolve) => {
+          if (reg.active) return resolve(reg);
+
+          const worker = reg.installing || reg.waiting;
+          if (!worker) return resolve(reg); // Oväntat tillstånd
+
+          const stateChangeListener = (e) => {
+            if (e.target.state === 'activated') {
+              worker.removeEventListener('statechange', stateChangeListener);
+              resolve(reg);
+            } else if (e.target.state === 'redundant') {
+              worker.removeEventListener('statechange', stateChangeListener);
+              resolve(null);
+            }
+          };
+          worker.addEventListener('statechange', stateChangeListener);
+        });
+
+        adminReg = await waitForActiveWorker(adminReg);
+
+        if (!adminReg || !adminReg.active) {
+          isMigrating.current = false;
+          console.warn('[pushService] Admin SW blev aldrig aktiv eller sattes till redundant.');
+          return;
+        }
+
+        // 2. Har vi redan en prenumeration för Admin-registreringen?
+        const currentSub = await adminReg.pushManager.getSubscription();
+        if (currentSub) {
+          // Allt är redan korrekt. Migration behövs ej. Lås permanent för denna session.
+          return;
+        }
+
+        // 3. Om vi saknar admin-prenumeration, skapa den.
+        console.log('[pushService] Migrerar till /admin Service Worker...');
+        const result = await subscribeToPush(adminReg);
+
+        if (!result.success) {
+          console.warn('[pushService] Misslyckades att skapa admin-prenumeration:', result.error);
+          isMigrating.current = false; // Lås upp för eventuell retry senare
+          return; // AVBRYT! Gamla prenumerationen är 100% orörd.
+        }
+
+        // 4. Ny prenumeration är skapad och sparad i Supabase.
+        // Nu gör vi cleanup av gamla public-registreringen.
+        const publicReg = await navigator.serviceWorker.getRegistration('/');
+        if (publicReg && publicReg.scope === window.location.origin + '/') {
+          const oldSub = await publicReg.pushManager.getSubscription();
+          if (oldSub) {
+            try {
+              // Avregistrera hos webbläsaren/push-servern
+              await oldSub.unsubscribe();
+              // Rensa upp i databasen
+              await supabase.from('push_subscriptions').delete().eq('endpoint', oldSub.endpoint);
+              console.log('[pushService] Gammal public-prenumeration bortstädad.');
+            } catch (cleanupError) {
+              console.warn('[pushService] DB-cleanup av gammal prenumeration misslyckades. Migrationen är dock genomförd.', cleanupError);
+            }
+          }
+        }
+      } catch (e) {
+        console.error('[pushService] Oväntat fel i push-migrering:', e);
+        isMigrating.current = false; // Lås upp
+      }
+    };
+
+    migratePushSubscription();
+  }, [user]);
 
   useEffect(() => {
     // Endast aktiv om vi har en inloggad admin

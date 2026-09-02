@@ -43,10 +43,10 @@ export function isPushSupported() {
 // Hämta aktuell PushSubscription för den här enheten (om den finns)
 // Returnerar null om ej prenumererad.
 // ---------------------------------------------------------------------------
-export async function getPushSubscription() {
+export async function getPushSubscription(customRegistration = null) {
   if (!isPushSupported()) return null;
   try {
-    const registration = await navigator.serviceWorker.ready;
+    const registration = customRegistration || await navigator.serviceWorker.ready;
     return await registration.pushManager.getSubscription();
   } catch {
     return null;
@@ -89,7 +89,7 @@ export async function getPushSubscriptionStatus(userId) {
 //   'vapid_missing'     – VAPID public key saknas
 //   'db_error'          – Supabase upsert misslyckades
 // ---------------------------------------------------------------------------
-export async function subscribeToPush() {
+export async function subscribeToPush(customRegistration = null) {
   if (!isPushSupported()) {
     return {
       success: false,
@@ -119,16 +119,18 @@ export async function subscribeToPush() {
     };
   }
 
-  // 2. Vänta på att service worker är redo
-  let registration;
-  try {
-    registration = await navigator.serviceWorker.ready;
-  } catch (e) {
-    return {
-      success: false,
-      error: 'Service worker är inte tillgänglig.',
-      code: 'sw_not_ready',
-    };
+  // 2. Vänta på att service worker är redo (om inte custom skickats in)
+  let registration = customRegistration;
+  if (!registration) {
+    try {
+      registration = await navigator.serviceWorker.ready;
+    } catch (e) {
+      return {
+        success: false,
+        error: 'Service worker är inte tillgänglig.',
+        code: 'sw_not_ready',
+      };
+    }
   }
 
   // 3. Hämta VAPID public key
