@@ -88,7 +88,7 @@ const MachineryCard = ({ machine }) => {
             flexWrap: 'wrap',
             gap: '0.5rem',
           }}>
-            {displayFeatures.map((feature, idx) => (
+            {displayFeatures.slice(0, 6).map((feature, idx) => (
               <li key={idx} style={{
                 backgroundColor: 'rgba(255,255,255,0.05)',
                 padding: '0.25rem 0.75rem',

@@ -22,7 +22,7 @@ const MachinerySection = () => {
         newParams.set(key, value);
       }
     });
-    setSearchParams(newParams, { replace: true });
+    setSearchParams(newParams, { replace: true, preventScrollReset: true });
   };
   const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
