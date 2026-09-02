@@ -23,14 +23,14 @@ const Footer = () => {
               <span>HAMMARÖ</span>
               <span style={{ color: 'var(--accent-primary)' }}>MASKIN &amp; SMIDE</span>
             </Link>
-            <p style={{ color: 'var(--text-secondary)' }}>{t('footer.tagline')}</p>
+            <p style={{ color: 'var(--text-primary)' }}>{t('footer.tagline')}</p>
           </div>
 
           {/* Nav links */}
           <div>
-            <h4 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem', fontSize: '1.125rem' }}>
+            <h3 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem', fontSize: '1.125rem', fontWeight: 700 }}>
               {t('footer.links')}
-            </h4>
+            </h3>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <li><Link to="/"         style={linkStyle}>{t('nav.home')}</Link></li>
               <li><Link to="/maskiner" style={linkStyle}>{t('nav.machines')}</Link></li>
@@ -42,9 +42,9 @@ const Footer = () => {
 
           {/* Contact info */}
           <div>
-            <h4 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem', fontSize: '1.125rem' }}>
+            <h3 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem', fontSize: '1.125rem', fontWeight: 700 }}>
               {t('footer.contact')}
-            </h4>
+            </h3>
             <address style={{ fontStyle: 'normal', color: 'var(--text-secondary)', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <span>{companyInfo.address.street}<br />{companyInfo.address.zip} {companyInfo.address.city}</span>
               <a href={companyInfo.contact.phoneLink} style={{ color: 'var(--text-secondary)' }}>{companyInfo.contact.phone}</a>
@@ -53,9 +53,9 @@ const Footer = () => {
 
           {/* Actions */}
           <div>
-            <h4 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem', fontSize: '1.125rem' }}>
+            <h3 style={{ color: 'var(--text-primary)', marginBottom: '1.5rem', fontSize: '1.125rem', fontWeight: 700 }}>
               {t('footer.actions')}
-            </h4>
+            </h3>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <li><a href={companyInfo.contact.phoneLink} style={{ color: 'var(--accent-primary)' }}>{t('footer.call')}</a></li>
               <li><Link to="/maskiner" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>{t('footer.viewMachines')}</Link></li>
@@ -74,7 +74,7 @@ const Footer = () => {
           flexWrap: 'wrap',
           gap: '1rem',
           fontSize: '0.875rem',
-          color: 'var(--text-muted)',
+          color: 'var(--text-primary)',
         }}>
           <span>&copy; {currentYear} {companyInfo.name}. {t('footer.rights')}</span>
           <span>Redesign Concept Demo</span>
