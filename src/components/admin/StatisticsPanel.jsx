@@ -205,7 +205,7 @@ export default function StatisticsPanel({ onNavigate }) {
         backgroundColor: 'var(--bg-surface)',
         border: '1px solid var(--border-color)',
         borderRadius: '12px',
-        padding: '1.5rem',
+        padding: '1.25rem',
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'space-between',
@@ -218,9 +218,9 @@ export default function StatisticsPanel({ onNavigate }) {
       onMouseEnter={e => { if (!noData && onClick) { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 6px 12px -2px rgba(0,0,0,0.1)' } }}
       onMouseLeave={e => { if (!noData && onClick) { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.05)' } }}
     >
-      <div style={{ flex: 1, paddingRight: '1rem', minWidth: 0 }}>
-        <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.25rem 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</p>
-        {subtitle && <p style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', margin: '0 0 0.5rem 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{subtitle}</p>}
+      <div style={{ flex: 1, paddingRight: '0.75rem', minWidth: 0 }}>
+        <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 0.25rem 0', wordBreak: 'break-word', lineHeight: 1.3 }}>{title}</p>
+        {subtitle && <p style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', margin: '0 0 0.5rem 0', wordBreak: 'break-word', lineHeight: 1.3 }}>{subtitle}</p>}
         {noData ? (
           <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', margin: subtitle ? 0 : '0.5rem 0 0 0', fontStyle: 'italic' }}>Ingen data för vald period</p>
         ) : (
@@ -307,7 +307,7 @@ export default function StatisticsPanel({ onNavigate }) {
       </p>
 
       {/* KPIs */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '1rem' }}>
         <KPICard title={isHistorical ? 'Tillkommet Lager' : 'Totalt Lager'} subtitle={isHistorical ? 'Skapade objekt' : 'Nuvarande saldo'} value={isHistorical ? recentStock.length : totalStockAll} icon={PackageOpen} color="#3b82f6" onClick={() => onNavigate && onNavigate('machines', 'all')} noData={false} />
         <KPICard title="Publicerat" subtitle={isHistorical ? undefined : 'Nuvarande status'} value={publishedStockAll} icon={TrendingUp} color="#22c55e" onClick={() => onNavigate && onNavigate('machines', 'published')} noData={isHistorical} />
         <KPICard title="Inkomna Leads" subtitle={isHistorical ? 'Skapade under perioden' : (isCurrentMonth ? 'Skapade denna månad' : (isAllTime ? 'Status: Ny' : 'Skapade under perioden'))} value={isAllTime ? newQuotesAll : recentQuotes.length} icon={MessageSquare} color="#f59e0b" onClick={() => onNavigate && onNavigate('quotes')} noData={false} />
