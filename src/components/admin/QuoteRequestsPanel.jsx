@@ -989,38 +989,60 @@ const QuoteRequestsPanel = ({ onQuotesUpdated }) => {
                     />
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                      <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: 'var(--accent-primary)', fontSize: '0.875rem', fontWeight: 600, alignSelf: 'flex-start' }}>
-                        <Paperclip size={16} /> Bifoga filer
-                        <input type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif,.pdf,.doc,.docx,.xls,.xlsx" onChange={(e) => {
-                          const newFiles = Array.from(e.target.files);
-                          const maxFileSize = 25 * 1024 * 1024; // 25MB
-                          const maxTotalSize = 50 * 1024 * 1024; // 50MB
+                      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '0.2rem' }}>
+                        <button
+                          type="button"
+                          onClick={() => document.getElementById('quote-image-upload').click()}
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: 'var(--accent-primary)', fontSize: '0.875rem', fontWeight: 600, background: 'none', border: 'none', padding: 0 }}
+                          disabled={isSendingReply}
+                        >
+                          <Paperclip size={16} /> Bifoga bild
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => document.getElementById('quote-doc-upload').click()}
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: 'var(--accent-primary)', fontSize: '0.875rem', fontWeight: 600, background: 'none', border: 'none', padding: 0 }}
+                          disabled={isSendingReply}
+                        >
+                          <FileText size={16} /> Bifoga dokument
+                        </button>
+                      </div>
 
-                          let errorMsg = '';
-                          let totalSize = selectedFiles.reduce((acc, f) => acc + f.size, 0);
+                      <input id="quote-image-upload" type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif" onChange={(e) => {
+                        const newFiles = Array.from(e.target.files);
+                        if (!newFiles.length) return;
+                        const maxFileSize = 25 * 1024 * 1024;
+                        const maxTotalSize = 50 * 1024 * 1024;
+                        let errorMsg = '';
+                        let currentTotalSize = selectedFiles.reduce((acc, f) => acc + f.size, 0);
+                        const validFiles = newFiles.filter(f => {
+                          if (f.size > maxFileSize) { errorMsg = `Filen ${f.name} är för stor (max 25 MB).`; return false; }
+                          if (currentTotalSize + f.size > maxTotalSize) { errorMsg = 'Total filstorlek överstiger 50 MB.'; return false; }
+                          currentTotalSize += f.size;
+                          return true;
+                        });
+                        if (errorMsg) setReplyError(errorMsg); else setReplyError('');
+                        if (validFiles.length > 0) setSelectedFiles(prev => [...prev, ...validFiles]);
+                        e.target.value = null;
+                      }} style={{ display: 'none' }} disabled={isSendingReply} />
 
-                          const validFiles = newFiles.filter(f => {
-                            // Vi förenklar valideringen för att undvika problem på mobiler där
-                            // filtyp eller filändelse ibland kan saknas.
-                            if (f.size > maxFileSize) {
-                              errorMsg = `Filen ${f.name} är för stor (max 25 MB per fil).`;
-                              return false;
-                            }
-                            if (totalSize + f.size > maxTotalSize) {
-                              errorMsg = 'Totala filstorleken överstiger gränsen på 50 MB.';
-                              return false;
-                            }
-                            totalSize += f.size;
-                            return true;
-                          });
-
-                          if (errorMsg) setReplyError(errorMsg);
-                          else setReplyError('');
-
-                          if (validFiles.length > 0) setSelectedFiles(prev => [...prev, ...validFiles]);
-                          e.target.value = null; // Tillåt samma fil igen om den tas bort
-                        }} style={{ display: 'none' }} disabled={isSendingReply} />
-                      </label>
+                      <input id="quote-doc-upload" type="file" multiple accept=".pdf,.doc,.docx,.xls,.xlsx" onChange={(e) => {
+                        const newFiles = Array.from(e.target.files);
+                        if (!newFiles.length) return;
+                        const maxFileSize = 25 * 1024 * 1024;
+                        const maxTotalSize = 50 * 1024 * 1024;
+                        let errorMsg = '';
+                        let currentTotalSize = selectedFiles.reduce((acc, f) => acc + f.size, 0);
+                        const validFiles = newFiles.filter(f => {
+                          if (f.size > maxFileSize) { errorMsg = `Filen ${f.name} är för stor (max 25 MB).`; return false; }
+                          if (currentTotalSize + f.size > maxTotalSize) { errorMsg = 'Total filstorlek överstiger 50 MB.'; return false; }
+                          currentTotalSize += f.size;
+                          return true;
+                        });
+                        if (errorMsg) setReplyError(errorMsg); else setReplyError('');
+                        if (validFiles.length > 0) setSelectedFiles(prev => [...prev, ...validFiles]);
+                        e.target.value = null;
+                      }} style={{ display: 'none' }} disabled={isSendingReply} />
                       {selectedFiles.length > 0 && (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', marginTop: '0.5rem' }}>
                           {selectedFiles.map((file, i) => (
