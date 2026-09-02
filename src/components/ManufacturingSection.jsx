@@ -13,7 +13,7 @@ const ManufacturingSection = ({ onOpenModal }) => {
         <div style={{
           flex: '1 1 50%',
           minWidth: '300px',
-          backgroundImage: "url('/images/Smide.jpg')",
+          backgroundImage: "url('/images/Smide.webp')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           minHeight: '400px',
