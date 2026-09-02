@@ -991,13 +991,8 @@ const QuoteRequestsPanel = ({ onQuotesUpdated }) => {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                       <label style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer', color: 'var(--accent-primary)', fontSize: '0.875rem', fontWeight: 600, alignSelf: 'flex-start' }}>
                         <Paperclip size={16} /> Bifoga filer
-                        <input type="file" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx" onChange={(e) => {
+                        <input type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif,.pdf,.doc,.docx,.xls,.xlsx" onChange={(e) => {
                           const newFiles = Array.from(e.target.files);
-                          const allowedTypes = [
-                            'application/pdf',
-                            'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                            'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-                          ];
                           const maxFileSize = 25 * 1024 * 1024; // 25MB
                           const maxTotalSize = 50 * 1024 * 1024; // 50MB
 
@@ -1005,11 +1000,8 @@ const QuoteRequestsPanel = ({ onQuotesUpdated }) => {
                           let totalSize = selectedFiles.reduce((acc, f) => acc + f.size, 0);
 
                           const validFiles = newFiles.filter(f => {
-                            const isImage = f.type.startsWith('image/');
-                            if (!isImage && !allowedTypes.includes(f.type) && !f.name.match(/\.(pdf|jpe?g|png|heic|heif|docx?|xlsx?)$/i)) {
-                              errorMsg = `Ogiltig filtyp: ${f.name}`;
-                              return false;
-                            }
+                            // Vi förenklar valideringen för att undvika problem på mobiler där
+                            // filtyp eller filändelse ibland kan saknas.
                             if (f.size > maxFileSize) {
                               errorMsg = `Filen ${f.name} är för stor (max 25 MB per fil).`;
                               return false;
