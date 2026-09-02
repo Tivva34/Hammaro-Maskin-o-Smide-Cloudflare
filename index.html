@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="sv-SE">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" href="/pwa-192x192.png">
+  <meta name="theme-color" content="#1e2123">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Hammarö Maskin & Smide | Lantbruksmaskiner, verkstad & smide</title>
+  <meta name="description"
+    content="Hammarö Maskin & Smide säljer och köper begagnade lantbruks- och entreprenadmaskiner samt erbjuder reparation, verkstad och specialtillverkning i Hammarö, Värmland." />
+
+  <!-- Open Graph Metadata -->
+  <meta property="og:title" content="Hammarö Maskin & Smide | Lantbruksmaskiner, verkstad & smide" />
+  <meta property="og:description"
+    content="Hammarö Maskin & Smide säljer och köper begagnade lantbruks- och entreprenadmaskiner samt erbjuder reparation, verkstad och specialtillverkning i Hammarö, Värmland." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.hammaromaskin.se/" />
+
+  <link rel="canonical" href="https://www.hammaromaskin.se/" />
+
+  <!-- JSON-LD for Local Business -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Hammarö Maskin & Smide AB",
+      "image": "https://www.hammaromaskin.se/images/logo-pwa.png",
+      "@id": "https://www.hammaromaskin.se/",
+      "url": "https://www.hammaromaskin.se/",
+      "telephone": "+4654525151",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Hallersrudsvägen 36",
+        "addressLocality": "Hammarö",
+        "postalCode": "663 42",
+        "addressCountry": "SE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 59.3235,
+        "longitude": 13.5186
+      }
+    }
+    </script>
+  <script>
+    (function() {
+      try {
+        var theme = localStorage.getItem('theme');
+        var metaTheme = document.querySelector('meta[name="theme-color"]');
+        if (theme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          if (metaTheme) metaTheme.setAttribute('content', '#ffffff');
+        } else if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {}
+      
+      // Graceful fallback for old bookmarks using hash routing
+      if (window.location.hash.startsWith('#/admin')) {
+        var newPath = window.location.hash.replace('#', '');
+        window.location.replace(newPath);
+      }
+    })();
+  </script>
+  <script type="module" crossorigin src="/assets/main-oc2DmsDZ.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/main-DU4DPW9B.css">
+<link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
+
+<body>
+  <div id="root"></div>
+</body>
+
+</html>
