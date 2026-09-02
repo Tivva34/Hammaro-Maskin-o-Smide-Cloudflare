@@ -228,9 +228,10 @@ export async function claimExistingSubscription(subscription) {
   });
 
   if (dbError) {
-    console.error('[pushService] Claim error:', dbError);
-    return { success: false, error: dbError.message, code: 'db_error' };
+    console.error('[pushService] Failed to claim push subscription:', dbError);
+    throw dbError; // Kasta felet så att anroparen (GlobalAdminNotifications) kan fånga det
   }
+  
   return { success: true };
 }
 
