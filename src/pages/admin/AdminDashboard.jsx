@@ -1114,15 +1114,36 @@ const AdminDashboard = () => {
         }
         @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
 
-        /* Mobile: hide table, show card list */
-        @media (max-width: 767px) {
+        /* Mobile & Tablet: hide table, show card list */
+        @media (max-width: 1023px) {
           .admin-table-wrap { display: none; }
           .admin-card-list  { display: block; }
         }
         /* Desktop: show table, hide card list */
-        @media (min-width: 768px) {
+        @media (min-width: 1024px) {
           .admin-table-wrap { display: block; overflow-x: auto; }
           .admin-card-list  { display: none; }
+        }
+        /* Tablet specific grid for cards */
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .admin-card-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+          }
+          .admin-card-list > div {
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            border-bottom: 1px solid var(--border-color) !important;
+            padding: 1.25rem !important;
+            display: flex;
+            flex-direction: column;
+          }
+          .admin-card-list > div > div:last-child {
+             margin-top: auto;
+             padding-top: 0.5rem;
+          }
         }
         /* Responsive Admin Navigation */
         .admin-nav {
@@ -1191,6 +1212,7 @@ const AdminDashboard = () => {
         @media (min-width: 768px) {
           .admin-nav {
             display: flex;
+            flex-wrap: wrap;
             margin-left: 0;
             margin-right: 0;
             padding: 0;
