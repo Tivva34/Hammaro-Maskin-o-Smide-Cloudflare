@@ -24,7 +24,7 @@ const TrustSection = () => {
   ];
 
   return (
-    <section className="section" style={{ backgroundColor: 'var(--bg-tertiary)', borderBottom: '1px solid var(--border-color)' }}>
+    <section className="section" style={{ backgroundColor: 'var(--bg-secondary)', borderBottom: '1px solid var(--border-color)' }}>
       <div className="container">
         <div style={{ maxWidth: '800px', marginBottom: '4rem' }}>
           <h2 style={{ marginBottom: '1rem' }}>{t('trust.heading')}</h2>

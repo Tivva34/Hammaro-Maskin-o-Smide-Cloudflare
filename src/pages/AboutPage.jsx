@@ -75,7 +75,7 @@ const AboutPage = () => {
       </section>
 
       {/* ── 2. Familjeföretaget ─────────────────────────────────── */}
-      <section className="section" style={{ backgroundColor: 'var(--bg-primary)' }}>
+      <section className="section" style={{ backgroundColor: 'var(--bg-secondary)' }}>
         <div className="container">
           <div style={{ maxWidth: '720px' }}>
             <span className="eyebrow fade-up">{t('about.familyEyebrow')}</span>

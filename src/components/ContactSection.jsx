@@ -8,7 +8,7 @@ const ContactSection = () => {
   const { t } = useLang();
 
   return (
-    <section id="kontakt" className="section" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
+    <section id="kontakt" className="section" style={{ backgroundColor: 'var(--bg-secondary)' }}>
       <div className="container">
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
           <span className="eyebrow">{t('contact.eyebrow')}</span>
@@ -89,7 +89,7 @@ const ContactSection = () => {
 };
 
 const cardStyle = {
-  backgroundColor: 'var(--bg-primary)',
+  backgroundColor: 'var(--bg-surface)',
   padding: '2rem',
   borderRadius: 'var(--radius-lg)',
   border: '1px solid var(--border-color)',

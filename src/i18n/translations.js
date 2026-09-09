@@ -113,7 +113,7 @@ const translations = {
     workshop: {
       eyebrow: 'Verkstad & Smide',
       heading: 'Reparation, verkstad & smide',
-      desc: 'I vår verkstad reparerar och bygger vi maskiner och konstruktioner efter kundens behov. Med bred kompetens löser vi det mesta.',
+      desc: 'I vår verkstad reparerar vi maskiner och bygger konstruktioner efter kundens behov. Med bred kompetens löser vi det mesta.',
       service1Title: 'Reparation',
       service1Desc: 'Service och reparation av lantbruks- och entreprenadmaskiner i vår välutrustade verkstad.',
       service2Title: 'Tillverkning',
@@ -193,7 +193,7 @@ const translations = {
       messagePlaceholder: 'Hej, jag är intresserad av...',
       
       types: {
-        workshop: 'Verkstad',
+        workshop: 'Verkstad + Offert',
         metalwork: 'Smide',
         custom: 'Specialtillverkning',
         boat_trailer: 'Båtvagn',
@@ -432,7 +432,7 @@ const translations = {
     workshop: {
       eyebrow: 'Workshop & Metalwork',
       heading: 'Repair, workshop & fabrication',
-      desc: "In our workshop we repair and build machinery and constructions to the customer's requirements. With broad expertise, we can handle most jobs.",
+      desc: "In our workshop we repair machinery and build constructions to the customer's requirements. With broad expertise, we can handle most jobs.",
       service1Title: 'Repair',
       service1Desc: 'Service and repair of agricultural and construction machinery in our well-equipped workshop.',
       service2Title: 'Fabrication',

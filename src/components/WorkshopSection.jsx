@@ -25,7 +25,7 @@ const WorkshopSection = ({ onOpenModal }) => {
   ];
 
   return (
-    <section id="verkstad" className="section" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
+    <section id="verkstad" className="section" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <div className="container">
         <div style={{
           display: 'flex',
@@ -49,7 +49,7 @@ const WorkshopSection = ({ onOpenModal }) => {
             <div
               key={idx}
               style={{
-                backgroundColor: 'var(--bg-primary)',
+                backgroundColor: 'var(--bg-surface)',
                 borderRadius: 'var(--radius-lg)',
                 padding: '3rem 2rem',
                 border: '1px solid var(--border-color)',

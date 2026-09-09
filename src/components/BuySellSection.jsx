@@ -45,7 +45,7 @@ const BuySellSection = ({ onOpenModal }) => {
         <div style={{
           flex: '1 1 50%',
           minWidth: '300px',
-          backgroundColor: 'var(--bg-surface)',
+          backgroundColor: 'var(--bg-tertiary)',
           padding: '6rem 4rem',
           display: 'flex',
           flexDirection: 'column',

@@ -410,14 +410,14 @@ const QuoteRequestsPanel = ({ onQuotesUpdated }) => {
   });
 
   const getTypeLabel = (type) => {
-    if (type === 'workshop') return 'Verkstad & Smide';
+    if (type === 'workshop') return 'Verkstad + Offert';
     return translations.sv.quote.types[type] || type;
   };
 
   const TYPE_OPTIONS = [
     { value: 'machine', label: 'Maskin' },
     { value: 'inventory', label: 'Lösöre' },
-    { value: 'workshop', label: 'Verkstad & Smide' },
+    { value: 'workshop', label: 'Verkstad + Offert' },
     { value: 'transport', label: 'Transport' },
     { value: 'sell_machine', label: 'Sälj maskin' },
     { value: 'requested', label: 'Efterfrågas' },

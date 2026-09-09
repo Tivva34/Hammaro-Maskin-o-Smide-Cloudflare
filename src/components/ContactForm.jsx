@@ -85,7 +85,7 @@ const ContactForm = ({ preselectedSubject = '' }) => {
   if (status === 'success') {
     return (
       <div style={{
-        backgroundColor: 'var(--bg-primary)',
+        backgroundColor: 'var(--bg-surface)',
         padding: '4rem 2rem',
         borderRadius: 'var(--radius-lg)',
         border: '1px solid var(--border-color)',
@@ -107,7 +107,7 @@ const ContactForm = ({ preselectedSubject = '' }) => {
 
   return (
     <div style={{
-      backgroundColor: 'var(--bg-primary)',
+      backgroundColor: 'var(--bg-surface)',
       padding: '3rem',
       borderRadius: 'var(--radius-lg)',
       border: '1px solid var(--border-color)',

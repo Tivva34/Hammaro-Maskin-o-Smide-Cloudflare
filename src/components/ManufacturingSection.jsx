@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLang } from '../contexts/LanguageContext';
 
-const ManufacturingSection = ({ onOpenModal }) => {
+const ManufacturingSection = ({ onOpenModal, onQuoteClick }) => {
   const { t } = useLang();
 
   return (
@@ -34,19 +34,31 @@ const ManufacturingSection = ({ onOpenModal }) => {
             <h2 style={{ marginBottom: '1.5rem' }}>{t('manufacturing.heading')}</h2>
             <p style={{ marginBottom: '2.5rem', fontSize: '1.125rem' }}>{t('manufacturing.desc')}</p>
             
-            {onOpenModal ? (
-              <button 
-                onClick={onOpenModal} 
-                className="btn btn-primary" 
-                style={{ border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: '1rem' }}
-              >
-                {t('manufacturing.cta')}
-              </button>
-            ) : (
-              <Link to="/kontakt" className="btn btn-primary" style={{ textDecoration: 'none' }}>
-                {t('manufacturing.cta')}
-              </Link>
-            )}
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              {onOpenModal ? (
+                <button 
+                  onClick={onOpenModal} 
+                  className="btn btn-primary" 
+                  style={{ border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: '1rem' }}
+                >
+                  {t('manufacturing.cta')}
+                </button>
+              ) : (
+                <Link to="/kontakt" className="btn btn-primary" style={{ textDecoration: 'none' }}>
+                  {t('manufacturing.cta')}
+                </Link>
+              )}
+              
+              {onQuoteClick ? (
+                <button 
+                  onClick={onQuoteClick} 
+                  className="btn btn-secondary" 
+                  style={{ cursor: 'pointer', fontFamily: 'inherit', fontSize: '1rem' }}
+                >
+                  Begär offert
+                </button>
+              ) : null}
+            </div>
           </div>
         </div>
 
