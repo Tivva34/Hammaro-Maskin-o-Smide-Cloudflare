@@ -10,16 +10,16 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
 // Public pages
-import HomePage           from './pages/HomePage';
-import MachineryPage      from './pages/MachineryPage';
+import HomePage from './pages/HomePage';
+import MachineryPage from './pages/MachineryPage';
 import MachineDetailsPage from './pages/MachineDetailsPage';
-import WorkshopPage       from './pages/WorkshopPage';
-import AboutPage          from './pages/AboutPage';
-import ContactPage        from './pages/ContactPage';
-import InventoryPage      from './pages/InventoryPage';
+import WorkshopPage from './pages/WorkshopPage';
+import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/ContactPage';
+import InventoryPage from './pages/InventoryPage';
 import InventoryDetailsPage from './pages/InventoryDetailsPage';
-import PrivacyPolicyPage    from './pages/PrivacyPolicyPage';
-import CookiesPage          from './pages/CookiesPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import CookiesPage from './pages/CookiesPage';
 
 // Admin pages (lazy loaded)
 const AdminLayout = React.lazy(() => import('./components/admin/AdminLayout'));
@@ -94,9 +94,9 @@ const MobileCta = () => {
       <a href="tel:+4654525151" className="btn btn-primary" style={{ flex: 1, borderRadius: 0, padding: '1rem' }}>
         {t('mobileCta.call')}
       </a>
-        <Link to="/maskiner" className="btn btn-secondary" style={{ flex: 1, borderRadius: 0, padding: '1rem', backgroundColor: 'var(--bg-primary)', display: 'flex', justifyContent: 'center', alignItems: 'center', textDecoration: 'none' }}>
-          {t('mobileCta.machines')}
-        </Link>
+      <Link to="/maskiner" className="btn btn-secondary" style={{ flex: 1, borderRadius: 0, padding: '1rem', backgroundColor: 'var(--bg-primary)', display: 'flex', justifyContent: 'center', alignItems: 'center', textDecoration: 'none' }}>
+        {t('mobileCta.machines')}
+      </Link>
     </div>
   );
 };
@@ -113,32 +113,32 @@ function PublicLayout() {
 
   return (
     <LanguageProvider>
-    <div className="app-container">
-      <ScrollToTop />
-      <AnimationObserver />
-      <Navbar />
-      <main className={isSubpage ? 'subpage-main' : ''}>
-        <Routes>
-          <Route path="/"                 element={<HomePage />} />
-          <Route path="/maskiner"         element={<MachineryPage />} />
-          <Route path="/maskiner/:slug"   element={<MachineDetailsPage />} />
-          <Route path="/verkstad"         element={<WorkshopPage />} />
-          <Route path="/om-oss"           element={<AboutPage />} />
-          <Route path="/kontakt"          element={<ContactPage />} />
-          <Route path="/losore"           element={<InventoryPage />} />
-          <Route path="/losore/:slug"       element={<InventoryDetailsPage />} />
-          <Route path="/integritetspolicy" element={<PrivacyPolicyPage />} />
-          <Route path="/cookies"          element={<CookiesPage />} />
-          {/* Fallback: unknown public routes → home */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </main>
-      <Footer />
+      <div className="app-container">
+        <ScrollToTop />
+        <AnimationObserver />
+        <Navbar />
+        <main className={isSubpage ? 'subpage-main' : ''}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/maskiner" element={<MachineryPage />} />
+            <Route path="/maskiner/:slug" element={<MachineDetailsPage />} />
+            <Route path="/verkstad" element={<WorkshopPage />} />
+            <Route path="/om-oss" element={<AboutPage />} />
+            <Route path="/kontakt" element={<ContactPage />} />
+            <Route path="/losore" element={<InventoryPage />} />
+            <Route path="/losore/:slug" element={<InventoryDetailsPage />} />
+            <Route path="/integritetspolicy" element={<PrivacyPolicyPage />} />
+            <Route path="/cookies" element={<CookiesPage />} />
+            {/* Fallback: unknown public routes → home */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+        <Footer />
 
-      {/* Fixed Mobile CTA */}
-      <MobileCta />
+        {/* Fixed Mobile CTA */}
+        <MobileCta />
 
-      <style>{`
+        <style>{`
         .mobile-cta-fixed {
           display: flex;
           position: fixed;
@@ -169,7 +169,7 @@ function PublicLayout() {
           }
         }
       `}</style>
-    </div>
+      </div>
     </LanguageProvider>
   );
 }
@@ -186,7 +186,7 @@ function App() {
   });
 
   const [diagnosticLogs, setDiagnosticLogs] = useState([]);
-  
+
   const addLog = (msg) => {
     console.log("[Auth Flow]", msg);
     setDiagnosticLogs(prev => [...prev, msg]);
@@ -197,16 +197,16 @@ function App() {
       addLog("current URL: " + window.location.href);
       addLog("current hash (maskerad): " + window.location.hash.replace(/=(.*?)(&|$)/g, "=***$2"));
       addLog("Waiting for Supabase to process recovery URL...");
-      
+
       const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
         addLog(`Auth event received: ${event}`);
-        
+
         if (event === 'PASSWORD_RECOVERY') {
           addLog("PASSWORD_RECOVERY event received");
           addLog(`Recovery session exists: ${!!session}`);
           if (session?.user) addLog(`Recovery user exists: true (${session.user.id})`);
           addLog("Navigating to update password page...");
-          
+
           setIsRecovering(false);
           // Ge React en ms att rendera BrowserRouter innan vi styr om
           setTimeout(() => {
@@ -220,7 +220,7 @@ function App() {
           }, 50);
         }
       });
-      
+
       const timeoutId = setTimeout(() => {
         addLog("Timeout (3s). Supabase skickade inget event. Släpper fram routern.");
         setIsRecovering(false);
