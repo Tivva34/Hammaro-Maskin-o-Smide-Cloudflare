@@ -18,6 +18,8 @@ import AboutPage          from './pages/AboutPage';
 import ContactPage        from './pages/ContactPage';
 import InventoryPage      from './pages/InventoryPage';
 import InventoryDetailsPage from './pages/InventoryDetailsPage';
+import PrivacyPolicyPage    from './pages/PrivacyPolicyPage';
+import CookiesPage          from './pages/CookiesPage';
 
 // Admin pages (lazy loaded)
 const AdminLayout = React.lazy(() => import('./components/admin/AdminLayout'));
@@ -80,6 +82,8 @@ const SUBPAGE_ROUTES = [
   '/kontakt',
   '/losore',
   '/losore/:slug',
+  '/integritetspolicy',
+  '/cookies',
 ];
 
 // Translated mobile CTA bar (must be inside LanguageProvider)
@@ -123,6 +127,8 @@ function PublicLayout() {
           <Route path="/kontakt"          element={<ContactPage />} />
           <Route path="/losore"           element={<InventoryPage />} />
           <Route path="/losore/:slug"       element={<InventoryDetailsPage />} />
+          <Route path="/integritetspolicy" element={<PrivacyPolicyPage />} />
+          <Route path="/cookies"          element={<CookiesPage />} />
           {/* Fallback: unknown public routes → home */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

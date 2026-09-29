@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
 import { useLang } from '../contexts/LanguageContext';
 import { createQuoteRequest } from '../lib/quoteService';
@@ -162,6 +163,10 @@ const ContactForm = ({ preselectedSubject = '' }) => {
             style={{ ...inputStyle, resize: 'vertical' }}
             placeholder={t('form.messagePlaceholder')}
           />
+        </div>
+        
+        <div style={{ fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+          Dina uppgifter används för att hantera din förfrågan. Läs mer i vår <Link to="/integritetspolicy" style={{ color: 'var(--accent-primary)', textDecoration: 'underline' }}>Integritetspolicy</Link>.
         </div>
 
         <button

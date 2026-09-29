@@ -37,6 +37,8 @@ const Footer = () => {
               <li><Link to="/verkstad" style={linkStyle}>{t('nav.workshop')}</Link></li>
               <li><Link to="/om-oss"   style={linkStyle}>{t('nav.about')}</Link></li>
               <li><Link to="/kontakt"  style={linkStyle}>{t('nav.contact')}</Link></li>
+              <li><Link to="/integritetspolicy" style={linkStyle}>Integritetspolicy</Link></li>
+              <li><Link to="/cookies" style={linkStyle}>Cookies & Lagring</Link></li>
             </ul>
           </div>
 
